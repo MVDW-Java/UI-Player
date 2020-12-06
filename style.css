@@ -1,0 +1,76 @@
+@font-face {
+  font-family: Montserrat;
+  src: url(../../assets/font/Montserrat-Regular.ttf);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #111;
+	user-select: none; 
+    color: #ddd;
+	font-family: Montserrat;
+}
+
+#screen_logo{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -128px;
+	margin-left: -128px;
+	width: 256px;
+	height: 256px;
+	user-select: none;
+}
+
+#controls-menu{
+	position: fixed;
+	top: calc(100vh - 64px);
+	height: 64px;
+	width: 100vw;
+	background-color: rgba(0,0,0, 0.5);
+	padding-left: 16px;
+	
+}
+#controls-time, #controls-row2{
+	width:calc(100vw - 32px);
+}
+#controls-play-pause, #controls-time-display, #controls-loop, #controls-volume, #controls-stream-select{
+	float:left;
+}
+#controls-play-pause, #controls-loop{
+	width: 32px;
+	height: 32px;
+}
+#controls-time-display {
+	padding-left: 16px;
+	padding-top: 6px;
+	width: 189px;
+}
+#controls-time-current, #controls-time-amount, #controls-time-devider{
+	float:left;
+}
+#controls-time-current, #controls-time-amount{
+	width: 76px;
+}
+#controls-time-devider {
+	width: 16px;
+}
+#main, video{
+	position: fixed;
+	width:100vw;
+	height:100vh;
+	top:0px;
+	left:0px;
+
+}
+#controls-volume{
+	float:right;
+}
+input[type="image"] {
+	padding-right: 16px;
+	outline: none;
+}

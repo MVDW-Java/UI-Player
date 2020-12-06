@@ -1,0 +1,80 @@
+{
+	"name": "UI-Player",
+	"version": "0.5.1",
+	"description": "The all in one media player",
+	"main": "main.js",
+	"scripts": {
+		"start": "electron .",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder"
+	},
+	"author": "MVDW",
+	"license": "None for now lmao",
+	"devDependencies": {
+		"electron": "^11.0.3",
+		"electron-builder": "^22.9.1"
+	},
+	"dependencies": {
+		"yarn": "^1.22.10"
+	},
+	"build": {
+		"productName": "UI-Player",
+		"appId": "com.mvdwstudios.ui-player",
+		"asar": true,
+		"extraResources": "assets/*",
+		"directories": {
+			"buildResources": "build"
+		},
+		"win": {
+			"asar": true,
+			"target": "nsis",
+			"icon": "build/icon.ico"
+		},
+		"extraFiles": [
+			"assets"
+		],
+		"nsis": {
+			"installerIcon": "build/32x32.ico",
+			"installerHeaderIcon": "build/64x64.ico",
+			"deleteAppDataOnUninstall": true
+		},
+		"fileAssociations": [
+			{
+				"ext": "brstm",
+				"name": "Binary Revolution Stream",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "mp4",
+				"name": "MPEG-4",
+				"role": "open",
+				"icon": "assets/ico/file_formats/mp4.ico"
+			},
+			{
+				"ext": "avi",
+				"name": "avi",
+				"role": "open",
+				"icon": "assets/ico/file_formats/mp4.ico"
+			},
+			{
+				"ext": "mkv",
+				"name": "MKV",
+				"role": "open",
+				"icon": "assets/ico/file_formats/mp4.ico"
+			},
+			{
+				"ext": "mov",
+				"name": "MOV",
+				"role": "open",
+				"icon": "assets/ico/file_formats/mp4.ico"
+			},
+			{
+				"ext": "webm",
+				"name": "webm",
+				"role": "open",
+				"icon": "assets/ico/file_formats/mp4.ico"
+			}
+		]
+	}
+}
