@@ -22,9 +22,26 @@ let streamStates = [true];
 let looped = false;
 let volume = 1;
 let hidemenu_timer = 3;
+let mediaType = 0; // 0 = nothing playing, 1 = brstm, 2 = video;
+
 
 window.addEventListener('DOMContentLoaded', () => {
-	
+
+
+	// Timers
+	setInterval(hidemenu, 1000);
+
+
+
+	//Menu Events
+	document.ondragover = document.ondrop = (ev) => {
+		ev.preventDefault()
+	}
+
+	document.body.ondrop = (ev) => {
+		Play_File(ev.dataTransfer.files[0].path)
+		ev.preventDefault()
+	}
 	
 	window.addEventListener('mousemove', e => {
 		hidemenu_timer = 3;
@@ -32,11 +49,105 @@ window.addEventListener('DOMContentLoaded', () => {
 		menu.style.cursor = "default";
 	});
 	
-	setInterval(hidemenu, 1000);
+
+	window.addEventListener('wheel', e => {
+		hidemenu_timer = 3;
+		menu.style.display = "block";
+		menu.style.cursor = "default";
+		
+		if(Math.sign(e.deltaY) == -1) elVolume.value = parseInt(elVolume.value) + 5;
+		if(Math.sign(e.deltaY) == 1) elVolume.value = parseInt(elVolume.value) - 5;
+		console.log(elVolume.value);
 	
+		if(mediaType == 1){
+			audioPlayer.setVolume(elVolume.value / 100);
+			
+		} else if(mediaType == 2){
+			video.volume = elVolume.value / 100;
+		}
+	});
+	
+	
+	
+	elVolume.addEventListener('input', (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+			
+		if(mediaType == 1){
+			audioPlayer.setVolume(elVolume.value / 100);
+			
+		} else if(mediaType == 2){
+			video.volume = elVolume.value / 100;
+		}
+	});
+	
+	
+	elPlayPause.addEventListener('click', (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+			
+		if(mediaType == 1){
+			
+			if (audioPlayer.isPlaying) {
+				audioPlayer.pause();
+				stopRenderCurrentTime();
+				disableStreamCheckboxes();
+			} else {
+				audioPlayer.play();
+				startRenderCurrentTime();
+				enableStreamCheckboxes();
+			}
+		} else if(mediaType == 2){
+			if (video.paused) {
+				elPlayPause.src = "../../assets/png/pause.png";
+				video.play();
+			} else {
+				elPlayPause.src = "../../assets/png/play.png";
+				video.pause();
+			}
+		}
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	window.addEventListener('keypress', e => {
+		
+		hidemenu_timer = 3;
+		menu.style.display = "block";
+		menu.style.cursor = "default";
+		
+		console.log(e.keyCode);
+		if(e.keyCode == 32){
+			if(mediaType == 1){
+				if (audioPlayer.isPlaying) {
+					audioPlayer.pause();
+					stopRenderCurrentTime();
+					disableStreamCheckboxes();
+				} else {
+					audioPlayer.play();
+					startRenderCurrentTime();
+					enableStreamCheckboxes();
+				}
+			} else if(mediaType == 2){
+				if (video.paused) {
+					elPlayPause.src = "../../assets/png/pause.png";
+					video.play();
+				} else {
+					elPlayPause.src = "../../assets/png/play.png";
+					video.pause();
+				}
+			}
+		}
+		
+	});
 	
 	function hidemenu() {
-		console.log(hidemenu_timer);
 		
 		if(hidemenu_timer == 0){
 			menu.style.display = "none";
@@ -50,68 +161,66 @@ window.addEventListener('DOMContentLoaded', () => {
 	
 	if (remote.process.argv.length >= 2) {
 		if(remote.process.argv[1] != "."){
-			if(remote.process.argv[1])
 			
-			var path_full = remote.process.argv[1];
-			var file_name = path_full.split('\\').pop().split('/').pop();
-			var file_ext = file_name.split('.').pop().toLowerCase();
-
-			
-			switch(file_ext){
-				case "brstm":
-					Play_BRSTM(path_full, file_name);
-					break;
-				case "mp4":
-				case "avi":
-				case "mkv":
-				case "mov":
-				case "webm":
-					Play_Video(path_full, file_name);
-					break;
-				case "mp3":
-				case "wav":
-				case "ogg":
-					alert("The only audio engine finished are for BRSTM files");
-					break;
-			}
+			Play_File(remote.process.argv[1]);
 			
 			
 		} else {
 			Reset_Screen();
 		}
 	}
-	//Play_Video("D:\\Downloads\\what_u_say.mp4", "lmao unused for now");
+
+	function Play_File(path){
+		
+		var file_name = path.split('\\').pop().split('/').pop();
+		var file_ext = file_name.split('.').pop().toLowerCase();
+
+		
+		switch(file_ext){
+			case "brstm":
+				mediaType = 1;
+				Play_BRSTM(path, file_name);
+				break;
+			case "mp4":
+			case "avi":
+			case "mkv":
+			case "mov":
+			case "webm":
+				mediaType = 2;
+				Play_Video(path, file_name);
+				break;
+			case "mp3":
+			case "wav":
+			case "ogg":
+				alert("The only audio engine finished are for BRSTM files");
+				break;
+		}
+	}
+
+
+
 	async function Play_Video(path_full, file_name){
+		
+		if (audioPlayer) {
+			audioPlayer.destroy();
+		}
 		
 		main.innerHTML = "<video id=\"video\"><source src=\"" + path_full + "\" type=\"video/mp4\"></video>";
 		const video = document.getElementById('video');
 		video.play();
 		elPlayPause.src = "../../assets/png/pause.png";
-		let time = Math.round(parseFloat(video.duration));
+		let time = video.duration * 10;
+		console.log(time);
 		elTimeAmount.textContent = formatTime(time);
 		
 		video.volume = 1;
 		video.muted = false;
-		elPlayPause.addEventListener('click', (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-
-			if (video.paused) {
-				elPlayPause.src = "../../assets/png/pause.png";
-				video.play();
-			} else {
-				elPlayPause.src = "../../assets/png/play.png";
-				video.pause();
-
-			}
-		});
 		
 		elVolume.addEventListener('input', (e) => {
 			e.preventDefault();
 			e.stopPropagation();
-			
-			volume = Math.round(parseFloat(e.target.value) * 1000) / 1000;
-			video.volume = volume;
+
+			video.volume = e.target.value;
 		});
 		
 		elLoop.addEventListener('click', (e) => {
@@ -152,6 +261,18 @@ window.addEventListener('DOMContentLoaded', () => {
 			renderCurrentTime()
 		});
 		
+		
+		video.addEventListener('click', (e) => {
+			if (video.paused) {
+				elPlayPause.src = "../../assets/png/pause.png";
+				video.play();
+			} else {
+				elPlayPause.src = "../../assets/png/play.png";
+				video.pause();
+
+			}
+		});
+		
 		function renderCurrentTime() {
 			const currentTime = video.currentTime;
 			if (!isElTimeDragging) {
@@ -185,6 +306,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	async function Play_BRSTM(path_full, file_name){
 		Reset_Screen();
 		document.title = "UI-Player - Playing music - " + file_name;
+		
 		fs.readFile(path_full, async (err, data) => {
 			try {
 				elErrors.textContent = '';
@@ -246,7 +368,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				elTimeAmount.textContent = formatTime(amountTimeInS);
 				elTime.max = amountTimeInS;
 
-				audioPlayer.setVolume(volume);
+				audioPlayer.setVolume(elVolume.value / 100);
 				audioPlayer.setLoop(looped);
 				startRenderCurrentTime();
 			} catch (e) {
@@ -279,24 +401,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 			shouldCurrentTimeRender = false;
 		}
-
-		elPlayPause.addEventListener('click', (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			if (!audioPlayer) {
-				return;
-			}
-			if (audioPlayer.isPlaying) {
-				audioPlayer.pause();
-				stopRenderCurrentTime();
-				disableStreamCheckboxes();
-			} else {
-				audioPlayer.play();
-				startRenderCurrentTime();
-				enableStreamCheckboxes();
-			}
-		});
-
 
 		function streamCheckedHandler(i) {
 			if (!audioPlayer) {
@@ -348,30 +452,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			}, 150);
 		});
 
-		elVolume.addEventListener('input', (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			
-			if (!audioPlayer) {
-				return;
-			}
-			volume = Math.round(parseFloat(e.target.value) * 1000) / 1000;
-			audioPlayer.setVolume(volume);
-		});
 
 
 
-		function disableStreamCheckboxes() {
-			for (const child of elStreamSelect.childNodes) {
-				child.disabled = true;
-			}
-		}
-		
-		function enableStreamCheckboxes() {
-			for (const child of elStreamSelect.childNodes) {
-				child.disabled = false;
-			}
-		}
+
 	}
 
 	function formatTime(timeAmountInS) {
@@ -388,5 +472,39 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		return number;
 	}
+	function renderCurrentTime() {
+		const currentTime = audioPlayer.getCurrrentPlaybackTime();
+		if (!isElTimeDragging) {
+			elTime.value = currentTime;
+		}
+		elTimeCurrent.textContent = formatTime(currentTime);
+
+		if (shouldCurrentTimeRender) {
+			currentTimeRenderAf = requestAnimationFrame(renderCurrentTime);
+		}
+	}
+
+	function startRenderCurrentTime() {
+		shouldCurrentTimeRender = true;
+		currentTimeRenderAf = requestAnimationFrame(renderCurrentTime);
+	}
 	
+	function stopRenderCurrentTime() {
+		if (currentTimeRenderAf) {
+			cancelAnimationFrame(currentTimeRenderAf);
+		}
+		shouldCurrentTimeRender = false;
+	}
+	
+	function disableStreamCheckboxes() {
+		for (const child of elStreamSelect.childNodes) {
+			child.disabled = true;
+		}
+	}
+		
+	function enableStreamCheckboxes() {
+		for (const child of elStreamSelect.childNodes) {
+			child.disabled = false;
+		}
+	}
 });

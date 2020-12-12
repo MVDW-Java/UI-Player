@@ -1,6 +1,6 @@
 {
 	"name": "UI-Player",
-	"version": "0.5.1",
+	"version": "0.5.2",
 	"description": "The all in one media player",
 	"main": "main.js",
 	"scripts": {
