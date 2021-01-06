@@ -1,6 +1,6 @@
 {
 	"name": "UI-Player",
-	"version": "0.5.2",
+	"version": "0.5.3",
 	"description": "The all in one media player",
 	"main": "main.js",
 	"scripts": {
@@ -12,32 +12,26 @@
 	"license": "None for now lmao",
 	"devDependencies": {
 		"electron": "^11.0.3",
-		"electron-builder": "^22.9.1"
-	},
-	"dependencies": {
+		"electron-builder": "^22.9.1",
 		"yarn": "^1.22.10"
 	},
 	"build": {
 		"productName": "UI-Player",
 		"appId": "com.mvdwstudios.ui-player",
 		"asar": true,
-		"extraResources": "assets/*",
-		"directories": {
-			"buildResources": "build"
-		},
 		"win": {
-			"asar": true,
 			"target": "nsis",
 			"icon": "build/icon.ico"
 		},
-		"extraFiles": [
-			"assets"
-		],
 		"nsis": {
 			"installerIcon": "build/32x32.ico",
 			"installerHeaderIcon": "build/64x64.ico",
 			"deleteAppDataOnUninstall": true
 		},
+		"extraFiles": [
+			"assets"
+		],
+		"extraResources": "assets/*",
 		"fileAssociations": [
 			{
 				"ext": "brstm",
@@ -76,5 +70,9 @@
 				"icon": "assets/ico/file_formats/mp4.ico"
 			}
 		]
+	},
+	"dependencies": {
+		"discord-rich-presence": "0.0.8",
+		"discord-rpc": "^3.1.4"
 	}
 }

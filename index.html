@@ -8,7 +8,11 @@
 	<body>
 
 		
-		<div id="main"></div>
+		<div id="main">
+			<video id="video-player"><source id="video-source" src=""></video>
+			<img id="screen-logo" src="../../assets/png/logo.png">
+		
+		</div>
 		
 		<div class="section error" id="errors"></div>
 		<div id="controls-menu">
@@ -29,7 +33,7 @@
 					<div id="controls-time-amount">00:00.00</div>
 				</div>
 				
-			
+				<input type="image" tabindex="-1" id="controls-mute-unmute" src="../../assets/png/mute.png" />
 				<input type="range" tabindex="-1" id="controls-volume" value="100" min="0" max="100" step="1"/>
 				<div id="controls-stream-select"></div>
 			</div> 

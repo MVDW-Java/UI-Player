@@ -15,7 +15,7 @@ body {
 	font-family: Montserrat;
 }
 
-#screen_logo{
+#screen-logo{
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -38,10 +38,10 @@ body {
 #controls-time, #controls-row2{
 	width:calc(100vw - 32px);
 }
-#controls-play-pause, #controls-time-display, #controls-loop, #controls-volume, #controls-stream-select{
+#controls-play-pause, #controls-time-display, #controls-loop, #controls-stream-select{
 	float:left;
 }
-#controls-play-pause, #controls-loop{
+#controls-play-pause, #controls-loop, #controls-mute-unmute{
 	width: 32px;
 	height: 32px;
 }
@@ -59,7 +59,7 @@ body {
 #controls-time-devider {
 	width: 16px;
 }
-#main, video{
+#main, #video-player{
 	position: fixed;
 	width:100vw;
 	height:100vh;
@@ -67,7 +67,7 @@ body {
 	left:0px;
 
 }
-#controls-volume{
+#controls-volume, #controls-mute-unmute{
 	float:right;
 }
 input[type="image"] {
