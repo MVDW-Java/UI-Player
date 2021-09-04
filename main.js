@@ -9,6 +9,8 @@ function createWindow () {
 	mainWindow = new BrowserWindow({
 		width: 1280,
 		height: 720,
+		minWidth: 720,
+		minHeight: 480,
 		icon: __dirname + '/assets/ico/favicon.ico',
 		webPreferences: {
 			nodeIntegration: true,

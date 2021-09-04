@@ -1,6 +1,6 @@
 @font-face {
   font-family: Montserrat;
-  src: url(../../assets/font/Montserrat-Regular.ttf);
+  src: url(assets/font/Montserrat-Regular.ttf);
 }
 
 * {
@@ -73,4 +73,12 @@ body {
 input[type="image"] {
 	padding-right: 16px;
 	outline: none;
+}
+#image-player {
+	height: 100vh;
+	width: 100vw;
+	object-fit: contain;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }

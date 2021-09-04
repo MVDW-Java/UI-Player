@@ -20,7 +20,9 @@
 		"appId": "com.mvdwstudios.ui-player",
 		"asar": true,
 		"win": {
-			"target": "nsis",
+			"target": [
+				"nsis"
+			],
 			"icon": "build/icon.ico"
 		},
 		"nsis": {
@@ -28,10 +30,6 @@
 			"installerHeaderIcon": "build/64x64.ico",
 			"deleteAppDataOnUninstall": true
 		},
-		"extraFiles": [
-			"assets"
-		],
-		"extraResources": "assets/*",
 		"fileAssociations": [
 			{
 				"ext": "brstm",
@@ -68,11 +66,66 @@
 				"name": "webm",
 				"role": "open",
 				"icon": "assets/ico/file_formats/mp4.ico"
+			},
+			{
+				"ext": "mp3",
+				"name": "mp3",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "wav",
+				"name": "wav",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "flac",
+				"name": "flac",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "ogg",
+				"name": "ogg",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "png",
+				"name": "png",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "jpg",
+				"name": "jpg",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "jpeg",
+				"name": "jpeg",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "gif",
+				"name": "gif",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
+			},
+			{
+				"ext": "bmp",
+				"name": "bmp",
+				"role": "open",
+				"icon": "assets/ico/file_formats/brstm.ico"
 			}
 		]
 	},
 	"dependencies": {
 		"discord-rich-presence": "0.0.8",
-		"discord-rpc": "^3.1.4"
+		"discord-rpc": "^3.1.4",
+		"youtube-stream-url": "^2.0.2"
 	}
 }

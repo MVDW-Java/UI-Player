@@ -9,8 +9,9 @@
 
 		
 		<div id="main">
-			<video id="video-player"><source id="video-source" src=""></video>
-			<img id="screen-logo" src="../../assets/png/logo.png">
+			<video id="video-player"><source id="video-source" src=""><track label="language one" kind="subtitles" srclang="en" default></video>
+			<img id="image-player" style="display:none;">
+			<img id="screen-logo" src="assets/png/logo.png">
 		
 		</div>
 		
@@ -25,15 +26,15 @@
 			
 			
 			
-				<input type="image" tabindex="-1" id="controls-play-pause" src="../../assets/png/play.png" />
-				<input type="image" tabindex="-1" id="controls-loop" src="../../assets/png/loop_off.png" />
+				<input type="image" tabindex="-1" id="controls-play-pause" src="assets/png/play.png" />
+				<input type="image" tabindex="-1" id="controls-loop" src="assets/png/loop_off.png" />
 				<div id="controls-time-display">
 					<div id="controls-time-current">00:00.00</div>
 					<div id="controls-time-devider">/</div>
 					<div id="controls-time-amount">00:00.00</div>
 				</div>
 				
-				<input type="image" tabindex="-1" id="controls-mute-unmute" src="../../assets/png/mute.png" />
+				<input type="image" tabindex="-1" id="controls-mute-unmute" src="assets/png/mute.png" />
 				<input type="range" tabindex="-1" id="controls-volume" value="100" min="0" max="100" step="1"/>
 				<div id="controls-stream-select"></div>
 			</div> 
